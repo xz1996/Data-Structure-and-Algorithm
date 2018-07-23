@@ -172,8 +172,8 @@ steps:
 
 3. 不断重复步骤2，直到队列为空。
 
-
 code:
+
 ```C
 void levelTraversal(BTNode* tree)
 {
