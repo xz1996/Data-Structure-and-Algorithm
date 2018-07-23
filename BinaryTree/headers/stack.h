@@ -7,23 +7,24 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+#include "binaryTree.h"
+
 /* ---------------- macro define --------------- */
 
-typedef int stack_type;
-
+typedef BTNode* stack_type;
 
 /* ---------------- struct declaration ------------ */
 
 typedef struct stackItem
 {
     stack_type value;
-    struct stackItem *next;
+    struct stackItem* next;
 } stackItem;
 
 typedef struct stack
 {
     int size;
-    struct stackItem *next;
+    struct stackItem* next;
 } linked_stack;
 
 /* ----------------- method declaration ------------ */

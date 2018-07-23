@@ -38,7 +38,7 @@ bool push(linked_stack* stack, stack_type value)
 stack_type pop(linked_stack* stack)
 {
     if (stack == NULL || stack -> next == NULL)
-        return (stack_type)NULL;
+        return NULL;
     else
     {
         stackItem* popItem = stack -> next;
@@ -61,7 +61,7 @@ stack_type getTop(linked_stack* stack)
 
 void clear(linked_stack* stack)
 {
-    while(pop(stack) != (stack_type)NULL);
+    while(pop(stack) != NULL);
 }
 
 bool isEmptyStack(linked_stack* stack)

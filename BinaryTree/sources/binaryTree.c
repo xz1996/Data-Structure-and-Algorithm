@@ -1,5 +1,6 @@
 #include "binaryTree.h"
 #include "loopQueue.h"
+#include "stack.h"
 
 BTNode* createBTree(int data[], int size)
 {
@@ -74,22 +75,77 @@ void postOrderRecursion(BTNode* tree)
     }
 }
 
+void preOrderNonRecursion(BTNode* tree)
+{
+    linked_stack* stack = NULL;
+    if (init_stack(&stack))
+    {
+        push(stack, tree);
+        while(!isEmptyStack(stack))
+        {
+            stack_type btnode = pop(stack);
+            while(btnode != NULL)
+            {
+                printf("%d ", btnode -> data);
+                if (btnode -> rChild)
+                    push(stack, btnode -> rChild);
+
+                btnode = btnode -> lChild;
+            }
+        }
+        free(stack);
+    }
+}
+
+void inOrderNonRecursion(BTNode* tree)
+{
+    linked_stack* stack = NULL;
+    if (init_stack(&stack))
+    {
+        stack_type nodeIndex = tree;
+        do
+        {
+            while (nodeIndex != NULL)
+            {
+                push(stack, nodeIndex);
+                nodeIndex = nodeIndex -> lChild;
+            }
+            nodeIndex = pop(stack);
+            printf("%d ", nodeIndex -> data);
+            nodeIndex = nodeIndex -> rChild;
+        } while ((!isEmptyStack(stack)) || (nodeIndex != NULL));
+        free(stack);
+    }
+}
+
+void postOrderNonRecursion(BTNode* tree)
+{
+    /*
+        It needs extra flag field to mark that it has been visited.
+    */
+}
+
 void levelTraversal(BTNode* tree)
 {
     if (tree != NULL)
     {
-        // loop queue initialization.
+        // Loop queue initialization.
         LoopQueue loopQ;
         loopQ.front = 0;
         loopQ.rear = 0;
         LoopQueue* loopQueue = &loopQ;
 
+        // Enqueue the root node.
         if (!enqueue(loopQueue, tree))
             return;
+
         while (!isEmpty(loopQueue))
         {
+            // Dequeue and visit the node.
             BTNode* node = dequeue(loopQueue);
             printf( "%d ", node -> data);
+
+            // Enqueue if there is left child tree or right one.
             if (node -> lChild != NULL)
             {
                 enqueue(loopQueue, node -> lChild);
@@ -102,3 +158,12 @@ void levelTraversal(BTNode* tree)
     }
 }
 
+void clearTree(BTNode* tree)
+{
+    if (tree != NULL)
+    {
+        clearTree(tree -> lChild);
+        clearTree(tree -> rChild);
+        free(tree);
+    }
+}
