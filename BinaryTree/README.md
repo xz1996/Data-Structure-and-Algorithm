@@ -10,7 +10,7 @@
 
     国际定义：A full binary tree is a tree in which every node has either 0 or 2 children.
 
-    ![full binary tree in the world](https://en.wikipedia.org/wiki/Binary_tree#/media/File:Full_binary.svg)
+    ![full binary tree in the world](https://en.wikipedia.org/wiki/File:Full_binary.svg)
 
 - Complete Binary Tree (完全二叉树)
 
