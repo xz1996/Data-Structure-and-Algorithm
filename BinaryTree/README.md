@@ -6,11 +6,7 @@
 
     国内定义：所有分支结点都有左孩子和右孩子，并且叶子结点都集中在最下层的二叉树。
 
-    ![full binary tree in China](https://baike.baidu.com/pic/%E6%BB%A1%E4%BA%8C%E5%8F%89%E6%A0%91/7773283/0/8ad4b31c8701a18be06a847b942f07082838fe05?fr=lemma&ct=single#aid=0&pic=2cf5e0fe9925bc31b16e97ac54df8db1cb1370d7)
-
     国际定义：A full binary tree is a tree in which every node has either 0 or 2 children.
-
-    ![full binary tree in the world](https://en.wikipedia.org/wiki/Binary_tree#/media/File:Full_binary.svg)
 
 - Complete Binary Tree (完全二叉树)
 
