@@ -12,6 +12,10 @@
 
     将满二叉树```从右至左、从下到上```按顺序删除结点所得到的树。完全二叉树除了最下层以外，其他结点的度必然为2，即除去最下层的完全二叉树将得到满二叉树。
 
+- Binary Search Tree (二叉搜索树)
+
+    features：结点的左子树的所有key值均小于该结点的key值， 结点的右子树的key值均大于该结点的key值。
+
 ## Traversal Algorithm
 
 ### PreOrder (先序遍历)
@@ -131,6 +135,11 @@
         }
     }
     ```
+- Notes
+
+  - How to judge a binary tree is a BST?
+
+    用中序遍历方式遍历该树，若所得序列为递增序列，则为BST。
 
 ### PostOrder (后序遍历)
 
