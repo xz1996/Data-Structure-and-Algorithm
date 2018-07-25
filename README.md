@@ -1,6 +1,6 @@
 # Data-Structure-and-Algorithm
 
-There are some examples of algorithm
+There are some examples of data structure and algorithm
 
 * [Computing the greatest common divisor](https://github.com/xz1996/Data-Structure-and-Algorithm/tree/master/GCD)
 
