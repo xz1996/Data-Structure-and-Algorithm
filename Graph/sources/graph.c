@@ -48,6 +48,40 @@ AdjListGraph* createAdjListGraph()
     return aGraph;
 }
 
+MGraph* createMatrixGraph()
+{
+    MGraph* mGraph = (MGraph*)malloc(sizeof(MGraph));
+    mGraph -> edgeNum = EDGE_NUM;
+    mGraph -> vertextNum = VERTEX_NUM;
+    (mGraph -> vex[0]).info = 'a';
+    (mGraph -> vex[1]).info = 'b';
+    (mGraph -> vex[2]).info = 'c';
+    (mGraph -> vex[3]).info = 'd';
+    (mGraph -> vex[4]).info = 'e';
+
+    for (int i = 0; i < VERTEX_NUM; i++)
+        for (int j = 0; j < VERTEX_NUM; j++)
+            if (i == j)
+                mGraph -> edges[i][j] = 0;
+            else
+                mGraph -> edges[i][j] = MAX_COST;
+
+    mGraph -> edges[0][1] = 10;
+    mGraph -> edges[1][0] = 10;
+    mGraph -> edges[0][2] = 40;
+    mGraph -> edges[2][0] = 40;
+    mGraph -> edges[0][3] = 16;
+    mGraph -> edges[3][0] = 16;
+    mGraph -> edges[0][4] = 36;
+    mGraph -> edges[4][0] = 36;
+    mGraph -> edges[1][4] = 5;
+    mGraph -> edges[4][1] = 5;
+    mGraph -> edges[2][3] = 30;
+    mGraph -> edges[3][2] = 30;
+
+    return mGraph;
+}
+
 // It just likes the preOrder traversal in binary tree
 void dfsRecursion(AdjListGraph* graph, int startVertexIndex, bool visit[])
 {
@@ -114,8 +148,108 @@ void bfs(AdjListGraph* graph, int startVertexIndex, bool visit[])
     }
 }
 
-// TODO
-void prim(MGraph *graph, int startVertex)
-{
 
+float prim(MGraph* graph, int startVertex)
+{
+    float totalCost = 0;
+    float lowCost[VERTEX_NUM];                // The value of lowCost[i] represents the minimum distance from vertex i to current spanning tree.
+    bool treeSet[VERTEX_NUM];               // The value of treeSet[i] represents whether the vertex i has been merged into the spanning tree.
+
+    // Initialization
+    for (int i = 0; i < (graph -> vertextNum); i++)
+    {
+        lowCost[i] = graph -> edges[startVertex][i];        // Init all cost from i to startVertex.
+        treeSet[i] = false;                                 // No vertex is in the spanning tree set at first.
+    }
+
+    treeSet[startVertex] = true;                            // Merge the startVertex into the spanning tree set.
+    printf("%c ", (graph -> vex[startVertex]).info);
+    for (int i = 0; i < (graph -> vertextNum); i++)
+    {
+        int minCost = MAX_COST;                             // MAX_COST is a value greater than any other edge weight.
+        int newVertex = startVertex;
+
+        // Find the minimum cost vertex which is out of the spanning tree set.
+        for (int j = 0; j < (graph -> vertextNum); j++)
+        {
+            if (!treeSet[j] && lowCost[j] < minCost)
+            {
+                minCost = lowCost[j];
+                newVertex = j;
+            }
+        }
+        treeSet[newVertex] = true;                          // Merge the new vertex into the spanning tree set.
+
+        /*
+
+            Some ops, for example you can print the vertex so you will get the sequence of node of minimum spanning tree.
+
+        */
+        if (newVertex != startVertex)
+        {
+            printf("%c ", (graph -> vex[newVertex]).info);
+            totalCost += lowCost[newVertex];
+        }
+
+
+        // Judge whether the cost is change between the new spanning tree and the remaining vertex.
+        for (int j = 0; j < (graph -> vertextNum); j++)
+        {
+            if (!treeSet[j] && lowCost[j] > graph -> edges[newVertex][j])
+                lowCost[j] = graph -> edges[newVertex][j];  // Update the cost between the spanning tree and the vertex j.
+        }
+    }
+    return totalCost;
+}
+
+
+int findRootInSet(int array[], int x)
+{
+    if (array[x] < 0)
+    {
+        // Find the root index.
+        return x;
+    }
+    else
+    {
+        // Recursively find its parent until find the root,
+        // then recursively update the children node so that they will point to the root.
+        return array[x] = findRootInSet(array, array[x]);
+    }
+}
+
+bool unionSet(int array[], int node1, int node2)
+{
+    int root1 = findRootInSet(array, node1);
+    int root2 = findRootInSet(array, node2);
+    if (root1 == root2)
+    {
+        // It means they are in the same set
+        return false;
+    }
+
+    // The value of array[root] is negative and the absolute value is its children numbers,
+    // when merging two sets, we choose to merge the more children set into the less one.
+    if (array[root1] > array[root2])
+    {
+        array[root1] += array[root2];
+        array[root2] = root1;
+    }
+    else
+    {
+        array[root2] += array[root1];
+        array[root1] = root2;
+    }
+    return true;
+}
+
+int getSetNumsInUFS(int array[], int arraySize)
+{
+    int count = 0;
+    for (int i = 0; i < arraySize; i++)
+    {
+        if (array[i] < 0)
+            count++;
+    }
+    return count;
 }

@@ -58,6 +58,15 @@ int main()
         if (visit[i] == false)
             bfs(adjListGraph, i, visit);
     }
+    printf("\n");
+
+    /* -------------------------- Minimum Spanning Tree -----------------------------*/
+    printf("Prim Algorithm : \n");
+    MGraph* mGraph = createMatrixGraph();
+    float totalCost = prim(mGraph, 0);
+    printf("\n");
+    printf("The minimum cost is %f\n", totalCost);
+    printf("\n");
 
     return 0;
 }

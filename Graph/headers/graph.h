@@ -12,6 +12,8 @@
 #define VERTEX_NUM 5
 #define EDGE_NUM 7
 
+#define MAX_COST 65535
+
 typedef char VERTEX_DATA_TYPE;
 
 /* ---------------- struct declaration ------------ */
@@ -56,6 +58,8 @@ typedef struct
 
 AdjListGraph* createAdjListGraph();
 
+MGraph* createMatrixGraph();
+
 void dfsRecursion(AdjListGraph* graph, int startVertexIndex, bool visit[]);
 
 void dfsNonRecursion(AdjListGraph* graph, int startVertextIndex, bool visit[]);
@@ -63,6 +67,40 @@ void dfsNonRecursion(AdjListGraph* graph, int startVertextIndex, bool visit[]);
 void bfs(AdjListGraph* graph, int startVertexIndex, bool visit[]);
 
 // Minimum Cost Spanning Tree
-void prim(MGraph *graph, int startVertex);
+
+/**
+ *  Prim Algorithm
+ *
+ *  Time complexity : O(n^2).
+ *
+ *  Prim algorithm is applicable to dense graph to generate minimum spanning tree.
+ */
+float prim(MGraph* graph, int startVertex);
+
+
+// Union Find Set
+
+/**
+ * Find the root index in a set.
+ *
+ * Note that there are some divided sets in the array, and each set has one root, the rest of the nodes in this set is its descendants.
+ *
+ * @param array, the set array.
+ * @param x, the node that you want to find its root.
+ * @return the root index in the array.
+ */
+int findRootInSet(int array[], int x);
+
+/**
+ * Merge two sets by their root.
+ *
+ * @param array, the set array.
+ * @param node1, the root node in one set.
+ * @param node2, the root node in another set.
+ * @return whether the operation is success.
+ */
+bool unionSet(int array[], int node1, int node2);
+
+int getSetNumsInUFS(int array[], int arraySize);
 
 #endif // GRAPH
