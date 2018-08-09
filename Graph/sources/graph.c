@@ -70,8 +70,8 @@ MGraph* createMatrixGraph()
     mGraph -> edges[1][0] = 10;
     mGraph -> edges[0][2] = 40;
     mGraph -> edges[2][0] = 40;
-    mGraph -> edges[0][3] = 16;
-    mGraph -> edges[3][0] = 16;
+    mGraph -> edges[0][3] = 8;
+    mGraph -> edges[3][0] = 8;
     mGraph -> edges[0][4] = 36;
     mGraph -> edges[4][0] = 36;
     mGraph -> edges[1][4] = 5;
@@ -82,7 +82,7 @@ MGraph* createMatrixGraph()
     return mGraph;
 }
 
-// It just likes the preOrder traversal in binary tree
+// It's just like the preOrder traversal in binary tree
 void dfsRecursion(AdjListGraph* graph, int startVertexIndex, bool visit[])
 {
     printf("%c ", (graph -> adjList[startVertexIndex]).info);
@@ -152,7 +152,7 @@ void bfs(AdjListGraph* graph, int startVertexIndex, bool visit[])
 float prim(MGraph* graph, int startVertex)
 {
     float totalCost = 0;
-    float lowCost[VERTEX_NUM];                // The value of lowCost[i] represents the minimum distance from vertex i to current spanning tree.
+    float lowCost[VERTEX_NUM];              // The value of lowCost[i] represents the minimum distance from vertex i to current spanning tree.
     bool treeSet[VERTEX_NUM];               // The value of treeSet[i] represents whether the vertex i has been merged into the spanning tree.
 
     // Initialization
@@ -201,7 +201,6 @@ float prim(MGraph* graph, int startVertex)
     }
     return totalCost;
 }
-
 
 int findRootInSet(int array[], int x)
 {
@@ -252,4 +251,62 @@ int getSetNumsInUFS(int array[], int arraySize)
             count++;
     }
     return count;
+}
+
+void dijkstra(MGraph* graph, int startVertexIndex)
+{
+    // For storing the minimum cost from the arbitrary node to the start vertex.
+    float minCostToStart[VERTEX_NUM];
+
+    // For marking whether the node is in the set.
+    bool set[VERTEX_NUM];
+
+    // Initialization
+    for (int i = 0; i < VERTEX_NUM; i++)
+    {
+        minCostToStart[i] = graph -> edges[i][startVertexIndex];
+        set[i] = false;
+    }
+
+    // Add the start vertex into the set.
+    set[startVertexIndex] = true;
+    int minNodeIndex = startVertexIndex;
+
+    for (int count = 1; count < VERTEX_NUM; count++)
+    {
+        int minCost = MAX_COST;
+
+        // Find the adjacent node which is nearest to the startVertexIndex.
+        for (int i = 0; i < VERTEX_NUM; i++)
+        {
+            if (!set[i] && minCostToStart[i] < minCost)
+            {
+                minNodeIndex = i;
+                minCost = minCostToStart[minNodeIndex];
+            }
+        }
+
+        // Add the proper node into the set
+        set[minNodeIndex] = true;
+
+        // After the new node is added into the set, update the minimum cost of each node which is out of the set.
+        for (int i = 0; i < VERTEX_NUM; i++)
+        {
+            if (!set[i] && (graph -> edges[i][minNodeIndex]) < MAX_COST)
+            {
+                // The new cost of each node to source = the cost of new added node to source + the cost of node i to new added node.
+                float newCost = minCostToStart[minNodeIndex] + graph -> edges[i][minNodeIndex];
+
+                if (newCost < minCostToStart[i])
+                    minCostToStart[i] = newCost;
+            }
+        }
+    }
+
+    printf("The cost of %c to each node:\n", (graph -> vex[startVertexIndex]).info);
+    for (int i = 0; i < VERTEX_NUM; i++)
+    {
+        if (i != startVertexIndex)
+            printf("-----> %c : %f\n", (graph -> vex[i]).info, minCostToStart[i]);
+    }
 }

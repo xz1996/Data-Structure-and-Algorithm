@@ -103,4 +103,6 @@ bool unionSet(int array[], int node1, int node2);
 
 int getSetNumsInUFS(int array[], int arraySize);
 
+void dijkstra(MGraph* graph, int startVertexIndex);
+
 #endif // GRAPH

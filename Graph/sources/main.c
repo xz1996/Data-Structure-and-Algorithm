@@ -63,8 +63,14 @@ int main()
     /* -------------------------- Minimum Spanning Tree -----------------------------*/
     printf("Prim Algorithm : \n");
     MGraph* mGraph = createMatrixGraph();
+    // Print the cost of each edge.
+    for (int i = 0; i < VERTEX_NUM; i++)
+        for (int j = i + 1; j < VERTEX_NUM; j++)
+            if ((mGraph -> edges[i][j]) != MAX_COST)
+                printf("%c---%c, cost:%f\n", (mGraph -> vex[i]).info, (mGraph -> vex[j]).info, mGraph -> edges[i][j]);
     float totalCost = prim(mGraph, 0);
     printf("\n");
+
     printf("The minimum cost is %f\n", totalCost);
     printf("\n");
 
