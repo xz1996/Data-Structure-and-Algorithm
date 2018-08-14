@@ -216,7 +216,7 @@ tips:
   
   In this example, we just regard an array as sets, each index represents the element sequence number in sets, and each value in the array(i.e. array[index]) stand for the parent index of this element, and among the big sets, each set has one root, the root value is negative and its absolute value represents the number of elements. Consequently we can easily judge two elements if they are in the same set by finding their root and judging whether their root is same.
 
-core code:
+- core code:
 
 ```C
 int findRootInSet(int array[], int x)
