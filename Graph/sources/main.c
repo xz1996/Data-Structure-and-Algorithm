@@ -70,8 +70,16 @@ int main()
                 printf("%c---%c, cost:%f\n", (mGraph -> vex[i]).info, (mGraph -> vex[j]).info, mGraph -> edges[i][j]);
     float totalCost = prim(mGraph, 0);
     printf("\n");
-
     printf("The minimum cost is %f\n", totalCost);
+    printf("\n");
+
+    /* -------------------------- Shortest Path -----------------------------*/
+    printf("Dijkstra Algorithm:\n");
+    dijkstra(mGraph, 1);
+    printf("\n");
+
+    printf("Floyd Algorithm:\n");
+    floyd(mGraph);
     printf("\n");
 
     return 0;

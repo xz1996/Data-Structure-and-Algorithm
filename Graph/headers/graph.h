@@ -105,4 +105,6 @@ int getSetNumsInUFS(int array[], int arraySize);
 
 void dijkstra(MGraph* graph, int startVertexIndex);
 
+void floyd(MGraph* graph);
+
 #endif // GRAPH

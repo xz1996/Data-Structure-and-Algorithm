@@ -264,9 +264,9 @@ bool unionSet(int array[], int node1, int node2)
 
 - intro
 
-Dijkstra's algorithm is to find the shortest path from single node to others
+  Dijkstra's algorithm is to find the shortest path from single node to others
 
-- steps
+- algorithm
 
   1. Divide into two sets: one is **visted set**, and the other is **unvisited set**, add the source node into the **visted set**.
 
@@ -335,6 +335,58 @@ void dijkstra(MGraph* graph, int startVertexIndex)
         if (i != startVertexIndex)
             printf("-----> %c : %f\n", (graph -> vex[i]).info, minCostToStart[i]);
     }
+}
+```
+
+## Floyd Algorithm
+
+- intro
+
+  Floyd Algorithm is to find the shortest between any two nodes.
+
+- algorithm
+
+  1. Storing the distance between node i and node j to the ```minCost[i][j]```;
+  2. Calculating the new distance if go through the node k, i.e. newDistance = minCost[i][k] + minCost[k][j]. If minCost[i][j] > newDistance, update the minCost[i][j], that is ```minCost[i][j] =  minCost[i][k] + minCost[k][j]```.
+  3. Repeat the step 2 until all the nodes are traversed as the node k.
+
+- core code
+
+```C
+void floyd(MGraph* graph)
+{
+    float minCost[VERTEX_NUM][VERTEX_NUM];          // Store the distance between any two nodes.
+    int path[VERTEX_NUM][VERTEX_NUM];               // Store the intermediate node between the two nodes.
+    int i, j, k;
+
+    // Initialization
+    for (i = 0; i < VERTEX_NUM; i++)
+    {
+        for (j = 0; j < VERTEX_NUM; j++)
+        {
+            minCost[i][j] = graph -> edges[i][j];
+            path[i][j] = -1;
+        }
+    }
+
+    // Find if there is another k node, it makes the distance dis[i][k] + dis[k][j] < dis[i][j];
+    for (k = 0; k < VERTEX_NUM; k++)
+        for (i = 0; i < VERTEX_NUM; i++)
+            for (j = 0; j < VERTEX_NUM; j++)
+            {
+                if (minCost[i][j] > minCost[i][k] + minCost[k][j])
+                {
+                    minCost[i][j] = minCost[i][k] + minCost[k][j];
+                    path[i][j] = k;
+                }
+            }
+
+    for (i = 0; i < VERTEX_NUM; i++)
+        for (j = 0; j < VERTEX_NUM; j++)
+        {
+            if (i != j && minCost[i][j] != MAX_COST)
+                printf("%c ---> %c, the minimum cost is %f\n", (graph -> vex[i]).info, (graph -> vex[j]).info, minCost[i][j]);
+        }
 }
 ```
 
