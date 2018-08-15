@@ -280,8 +280,8 @@ void dijkstra(MGraph* graph, int startVertexIndex)
         {
             if (!set[i] && minCostToStart[i] < minCost)
             {
-                minNodeIndex = i;
                 minCost = minCostToStart[minNodeIndex];
+                minNodeIndex = i; 
             }
         }
 

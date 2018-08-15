@@ -157,7 +157,7 @@ tips:
     float prim(MGraph* graph, int startVertex)
     {
         float totalCost = 0;
-        float lowCost[VERTEX_NUM];                // The value of lowCost[i] represents the minimum distance from vertex i to current spanning tree.
+        float lowCost[VERTEX_NUM];              // The value of lowCost[i] represents the minimum distance from vertex i to current spanning tree.
         bool treeSet[VERTEX_NUM];               // The value of treeSet[i] represents whether the vertex i has been merged into the spanning tree.
 
         // Initialization
@@ -268,13 +268,13 @@ bool unionSet(int array[], int node1, int node2)
 
 - algorithm
 
-  1. Divide into two sets: one is **visted set**, and the other is **unvisited set**, add the source node into the **visted set**.
+  1. Divide into two sets: one is **visited set**, and the other is **unvisited set**, add the source node into the **visited set**.
 
-  2. Consider all of its(i.e. source node) unvisited neighbors and select the "nearest" one, move it from unvisited set to viseted one.
+  2. Consider all of its(i.e. source node) unvisited neighbors and select the "nearest" one, move it from unvisited set to visited one.
 
   3. The new added node can be regarded as a transfer station, recalculate the distance from **unvisited set** to the source node, especially the distance through the new added node.
 
-  4. Repeat step 2 until all the nodes are in the **visted set**.
+  4. Repeat step 2 until all the nodes are in the **visited set**.
 
 - core code
 
@@ -307,8 +307,8 @@ void dijkstra(MGraph* graph, int startVertexIndex)
         {
             if (!set[i] && minCostToStart[i] < minCost)
             {
-                minNodeIndex = i;
                 minCost = minCostToStart[minNodeIndex];
+                minNodeIndex = i;
             }
         }
 
@@ -337,6 +337,8 @@ void dijkstra(MGraph* graph, int startVertexIndex)
     }
 }
 ```
+
+tips: You will find the Dijkstra algorithm is similar to the Prim algorithm, especially the step 2. Dijkstra algorithm always selects the one which is out of the set and nearest to the ```start vertex```, while Prim algorithm always selects the one which is also out of the set and nearest to the ```spanning tree```.
 
 ## Floyd Algorithm
 
