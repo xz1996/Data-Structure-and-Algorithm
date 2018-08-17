@@ -16,6 +16,8 @@ There are some examples of data structure and algorithm
   
 * [Sort](https://github.com/xz1996/Data-Structure-and-Algorithm/tree/master/Sort)
 
+* [StrUtil](https://github.com/xz1996/Data-Structure-and-Algorithm/tree/master/StrUtil)
+
 ---
 
 If you want to know more about the concepts and algorithms of computer science, please click [here](https://www.studytonight.com/)
