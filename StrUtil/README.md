@@ -8,7 +8,7 @@
 
 - algorithm
 
-  - How to calculate the next array value?
+  - How to calculate the next array value? The **pattern string** will stagger one position and compare itself.
     ![nextArray1](./doc/pictures/nextArray1.jpg)
     ![nextArray2](./doc/pictures/nextArray2.jpg)
     ![nextArray3](./doc/pictures/nextArray3.jpg)
