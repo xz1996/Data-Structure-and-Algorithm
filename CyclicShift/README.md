@@ -29,7 +29,7 @@ As shown above, the ```xor``` method can efficiently implement the exchange of t
 
 for example, left cyclic shift n position.
 
-1. reverse the ```first n``` elements.
+1. reverse the **first n** elements.
 
 2. reverse the rest of elements.
 
@@ -49,7 +49,7 @@ reverse(array, 0, array_size - 1);
 
 for instance, right cyclic shift n position.
 
-1. reverse the ```last n``` elements.
+1. reverse the **last n** elements.
 
 2. reverse the remaining elements.
 
