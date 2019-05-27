@@ -29,7 +29,7 @@
     } AdjListGraph;
     ```
 
-- adjacency martrix
+- adjacency matrix
 
     It is applicable to dense graph.
 
