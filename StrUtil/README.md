@@ -71,3 +71,7 @@
             return -1;
     }
     ```
+
+## Manacher Algorithm
+
+Refer to <https://subetter.com/algorithm/manacher-algorithm.html>
