@@ -29,7 +29,7 @@
     } AdjListGraph;
     ```
 
-- adjacency martrix
+- adjacency matrix
 
     It is applicable to dense graph.
 
@@ -339,8 +339,6 @@ void dijkstra(MGraph* graph, int startVertexIndex)
 ```
 
 *tips: You will find the Dijkstra algorithm is similar to the Prim algorithm, especially the step 2. Dijkstra algorithm always selects the one which is out of the set and nearest to the **start vertex**, while Prim algorithm always selects the one which is also out of the set and nearest to the **spanning tree**.*
-
-You can find the more detail working process information of the dijkstra algorithm from [here](https://www.cnblogs.com/nigang/p/3658990.html)
 
 ## Floyd Algorithm
 
