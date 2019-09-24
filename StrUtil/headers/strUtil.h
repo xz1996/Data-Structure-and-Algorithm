@@ -17,6 +17,8 @@ int* getNextArray(const char* pattern);
 
 int kmp(char* text, char* pattern);
 
-int Manacher(const char* rawStr);
+int manacher(const char* rawStr);
+
+int lcs(const char* str1, const char* str2);
 
 #endif

@@ -7,5 +7,8 @@ int main()
     printf("KMP algorithm, The matching index is %d.\n", kmp(text, pattern));
 
     char* palindrome = "asd543456";
-    printf("The Longest Palindrome Substring length is %d\n\n", Manacher(palindrome));
+    printf("The Longest Palindrome Substring length is %d\n\n", manacher(palindrome));
+
+    printf("The Longest Common Substring length is %d\n", lcs(text, pattern));
 }
+

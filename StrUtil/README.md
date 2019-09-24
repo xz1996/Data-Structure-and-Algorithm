@@ -75,3 +75,7 @@
 ## Manacher Algorithm
 
 Refer to <https://subetter.com/algorithm/manacher-algorithm.html>
+
+## Longest Common Substring
+
+Refer to <https://zhuanlan.zhihu.com/p/47597440>

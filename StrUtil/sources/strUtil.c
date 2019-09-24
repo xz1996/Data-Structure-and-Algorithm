@@ -69,7 +69,7 @@ int max (int v1, int v2)
     return v1 > v2 ? v1 : v2;
 }
 
-int Init(const char* rawStr, char* const newStr)
+int initManacher(const char* rawStr, char* const newStr)
 {
     int len = strlen(rawStr);
     newStr[0] = '$';
@@ -86,11 +86,11 @@ int Init(const char* rawStr, char* const newStr)
     return j;
 }
 
-int Manacher(const char* rawStr)
+int manacher(const char* rawStr)
 {
     char* newStr = (char*)calloc(strlen(rawStr) * 2 + 3, sizeof(char));
     int* p = (int*)calloc(strlen(rawStr) * 2 + 3, sizeof(int)); // p[i]的值表示以i为中心的最长回文半径
-    int len = Init(rawStr, newStr);  // 将字符串的长度转为奇数并以"$"开始，"\0"结尾
+    int len = initManacher(rawStr, newStr);  // 将字符串的长度转为奇数并以"$"开始，"\0"结尾
     int max_len = -1;  // 最长回文长度
 
     int center = 0;
@@ -122,3 +122,61 @@ int Manacher(const char* rawStr)
     return max_len;
 }
 
+/* -------------------- Longest Common Substring --------------------*/
+
+int lcs(const char* str1, const char* str2)
+{
+    int len1 = strlen(str1);
+    int len2 = strlen(str2);
+    char dp[1000][1000];    // dp array for recording the all comparative information of these two strings.
+    int rowIndex;
+    int columnIndex;
+    int maxLen = 0;         // record the maximum length of substring.
+    int maxRow = 0;         // record the row num of the maxLen in dp array.
+
+    // Init the first column with 0
+    for (rowIndex = 0; rowIndex < len1 + 1; rowIndex++)
+    {
+        dp[rowIndex][0] = 0;
+    }
+
+    // Init the first row with 0
+    for (columnIndex = 0; columnIndex < len2 + 1; columnIndex++)
+    {
+        dp[0][columnIndex] = 0;
+    }
+
+    for (rowIndex = 1; rowIndex < len1 + 1; rowIndex++)
+    {
+        for (columnIndex = 1; columnIndex < len2 + 1; columnIndex++)
+        {
+            if (str1[rowIndex - 1] == str2[columnIndex - 1])        // because the begin of rowIndex and columnIndex are 1, so they both need to minus 1.
+            {
+                dp[rowIndex][columnIndex] = dp[rowIndex - 1][columnIndex - 1] + 1;  // Its value depends on diagonal.
+            }
+            else
+            {
+                dp[rowIndex][columnIndex] = 0;
+            }
+
+            if (maxLen < dp[rowIndex][columnIndex])
+            {
+                maxLen = dp[rowIndex][columnIndex];
+                maxRow = rowIndex;
+            }
+        }
+    }
+
+    // Print the Longest Common Substring
+    // char s[100];
+    // int i = 0;
+    // for (int j = maxRow - maxLen; i < maxLen; i++, j++)
+    // {
+    //     s[i] = str1[j];
+    // }
+    // s[i] = '\0';
+    // printf("The Longest Common Substring is %s\n", s);
+
+    return maxLen;
+
+}
