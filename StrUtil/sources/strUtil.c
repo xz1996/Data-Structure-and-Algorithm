@@ -93,8 +93,8 @@ int manacher(const char* rawStr)
     int len = initManacher(rawStr, newStr);  // 将字符串的长度转为奇数并以"$"开始，"\0"结尾
     int max_len = -1;  // 最长回文长度
 
-    int center = 0;
-    int radius = 0;     //以center为中心的最大回文半径
+    int center = 0;     // center的主要作用是作为回文的中心，这个轴中心是从左往右跳跃着变化的
+    int radius = 0;     // 以center为中心的最大回文半径
 
     for (int i = 1; i < len; i++)
     {
@@ -110,7 +110,7 @@ int manacher(const char* rawStr)
         // 我们每走一步 i，都要和 radius 比较，我们希望 radius 尽可能的远，这样才能更有机会执行 if (i < radius)这句代码，从而提高效率
         if (radius < i + p[i])
         {
-            center = i;     // center这个轴中心是从左往右跳跃着变化的
+            center = i;     // 更新center的位置
             radius = i + p[i];  // 更新为以新center为中心的最大回文半径
         }
 
