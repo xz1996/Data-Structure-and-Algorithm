@@ -72,7 +72,7 @@
     }
     ```
 
-Time complexity: *O(m + n)*, m means raw twxt length, n means pattern text length.
+Time complexity: *O(m + n)*, m means raw text length, n means pattern text length.
 
 More information, please refer to <https://www.zhihu.com/question/21923021/answer/281346746>
 
