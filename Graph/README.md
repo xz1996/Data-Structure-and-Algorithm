@@ -7,6 +7,7 @@
     It is applicable to sparse graph.
 
     structrue definition:
+
     ```C
     typedef struct EdgeNode
     {
@@ -34,6 +35,7 @@
     It is applicable to dense graph.
 
     structure definition:
+
     ```C
     typedef struct
     {
@@ -55,6 +57,7 @@
 - Recursion
 
     core code:
+
     ```C
     void dfsRecursion(AdjListGraph* graph, int startVertexIndex, bool visit[])
     {
@@ -69,11 +72,13 @@
         }
     }
     ```
+
     tips: the recursive DFS is just like the preorder traversal in binary tree.
 
 - Non-Recursion
 
     core code:
+
     ```C
     void dfsNonRecursion(AdjListGraph* graph, int startVertextIndex, bool visit[])
     {
@@ -196,7 +201,6 @@ tips:
                 totalCost += lowCost[newVertex];
             }
 
-
             // Judge whether the cost is change between the new spanning tree and the remaining vertex.
             for (int j = 0; j < (graph -> vertextNum); j++)
             {
@@ -213,7 +217,7 @@ tips:
 - intro
 
   Union-Find set(also called disjoint set), it can easily judge whether some elements are in a same set, for this feature, it plays a key role in [Kruskal's algorithm](https://en.wikipedia.org/wiki/Kruskal%27s_algorithm) for finding the [minimum spanning tree](https://en.wikipedia.org/wiki/Minimum_spanning_tree) of a graph.
-  
+
   In this example, we just regard an array as sets, each index represents the element sequence number in sets, and each value in the array(i.e. array[index]) stand for the parent index of this element, and among the big sets, each set has one root, the root value is negative and its absolute value represents the number of elements. Consequently we can easily judge two elements if they are in the same set by finding their root and judging whether their root is same.
 
 - core code:
