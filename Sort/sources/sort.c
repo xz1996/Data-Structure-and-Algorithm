@@ -9,22 +9,24 @@ void insertionSort(int array[], int length, int gap, bool isAscend)
     {
         temp = array[i];
 
-        // j always points to the sorted subarray from the back to the front.
+        // j's initial value is always the end of sorted subarray, and its direction of movement is from back to front.
         for (j = i - gap; j >= 0 && (isAscend ? temp < array[j] : temp > array[j]); j -= gap)
         {
             array[j + gap] = array[j]; // right shift.
         }
-        array[j + gap] = temp;
+        array[j + gap] = temp; // insert the element i into the proper position.
     }
 }
 
 void simpleInsertionSort(int array[], int length, bool isAscend)
 {
-   insertionSort(array, length, 1, isAscend);
+    // Simple inserion sort, the gap is 1.
+    insertionSort(array, length, 1, isAscend);
 }
 
 void shellSort(int array[], int length, bool isAscend)
 {
+    // The initial value of gap is length / 2, then it will divide by 2 each cycle.
     for (int gap = length >> 1; gap > 0; gap >>= 1)
         insertionSort(array, length, gap, isAscend);
 }
@@ -39,9 +41,11 @@ void bubbleSort(int array[], int length, bool isAscend)
         {
             if (isAscend ? array[j] > array[j + 1] : array[j] < array[j + 1])
             {
+                // exchange the value between array[j] and array[j + 1]
                 array[j] = array[j] ^ array[j + 1];
                 array[j + 1] = array[j] ^ array[j + 1];
                 array[j] = array[j] ^ array[j + 1];
+
                 isSortdFlag = true;
             }
         }
@@ -54,36 +58,38 @@ void bubbleSort(int array[], int length, bool isAscend)
 
 void selectionSort(int array[], int length, bool isAscend)
 {
-    int value = 0;
-    int index = 0;
+    int index = 0;  // Store the index of the value when it's max or min.
 
     // i points to the first element of unsorted subarray.
     for (int i = 0; i < length - 1; i++)
     {
-        index = i + 1;
-        value = array[index];
+        index = i;
 
         // j is used to traverse the unsorted subarray.
-        for (int j = index; j < length; j++)
+        for (int j = i + 1; j < length; j++)
         {
-            if (isAscend ? value > array[j] : value < array[j])
+            if (isAscend ? array[index] > array[j] : array[index] < array[j])
             {
-                value = array[j];
                 index = j;
             }
         }
 
-        array[i] = array[i] ^ array[index];
-        array[index] = array[i] ^ array[index];
-        array[i] = array[i] ^ array[index];
+        // Find the max or min value and exchange it with i.
+        if (i != index)
+        {
+            array[i] = array[i] ^ array[index];
+            array[index] = array[i] ^ array[index];
+            array[i] = array[i] ^ array[index];
+        }
     }
 }
 
 void merge(int array[], int start, int mid, int end, bool isAscend)
 {
-    int* temp = (int *)calloc(end - start + 1, sizeof(int));
+    int* temp = (int *)calloc(end - start + 1, sizeof(int));    // temp array is for the merge operation from two devided parts
     int index1 = start, index2 = mid + 1, tempIndex = 0;
 
+    // Merge the two parts into temp array in some order.
     while (index1 <= mid && index2 <= end)
     {
         if (array[index1] <= array[index2])
@@ -91,8 +97,12 @@ void merge(int array[], int start, int mid, int end, bool isAscend)
         else
             temp[tempIndex++] = isAscend ? array[index2++] : array[index1++];
     }
+
+    // If right part isn't completed, merge the rest into the temp array.
     while(index1 <= mid)
         temp[tempIndex++] = array[index1++];
+
+    // If left part isn't completed, merge the rest into the temp array as well.
     while (index2 <= end)
         temp[tempIndex++] = array[index2++];
 
@@ -107,8 +117,14 @@ void division(int array[], int start, int end, bool isAscend)
     if (end > start)
     {
         int mid = (start + end) >> 1;
+
+        // Divide left part.
         division(array, start, mid, isAscend);
+
+        // Divide right part.
         division(array, mid + 1, end, isAscend);
+
+        // Though it has no regularity when dividing into two parts, there is a rule that when merging two parts, the beginning of two parts both are the min(max) element, and the end of two parts are the max(min) element in their respective parts. If the end of right part is less than the beginning of the left, means these two parts have been sorted, don't need to do merging operation, or else carry out the merge function.
         if (isAscend ? array[mid] > array[mid + 1] : array[mid] < array[mid + 1])
             merge(array, start, mid, end, isAscend);
     }
@@ -120,6 +136,7 @@ void mergeSortRecursion(int array[], int length, bool isAscend)
         division(array, 0, length - 1, isAscend);
 }
 
+/ Find the median
 int findMidVal(int a, int b, int c)
 {
     int max = a > b ? a : b;
@@ -137,7 +154,7 @@ int partition(int array[], int start, int end, bool isAscend)
     int pivotIndex = (pivotValue == array[start]) ? start : (pivotValue == array[mid] ? mid : end);
     int left = start, right = end;
 
-    // Swap the pivot value with the start element.
+    // Swap the pivot with the first element because it's convenient for the code implementation if the pivot is the first element. According to the following code, the first element will be overwritten by the proper right element, at that time, the right element will appear twice, and then it will also be overwritten by other left element...all elements have chance to appear twice except for the first one, on account of that, if the pivot is the first one, the first element can appear not only in array[0], but also in pivot, and don't need to worry about the overwritten problem. Eventually, the pivot can overwrite the element where the left and the right index point simultaneously.
     if (pivotIndex != start)
     {
         array[start] = array[start] ^ array[pivotIndex];
@@ -184,7 +201,7 @@ void heapify(int array[], int length, int rootIndex, bool isAscend)
     int lChild = 2 * rootIndex + 1;
     int rChild = 2 * rootIndex + 2;
 
-    if (lChild < length && (isAscend ? array[lChild] > array[rootIndex] : array[lChild] < array[rootIndex]))
+    if (lChild < length && (isAscend ? array[lChild] > array[extremum] : array[lChild] < array[extremum]))
         extremum = lChild;
 
     if (rChild < length && (isAscend ? array[rChild] > array[extremum] : array[rChild] < array[extremum]))
@@ -193,23 +210,23 @@ void heapify(int array[], int length, int rootIndex, bool isAscend)
     // if the maximum or minimum is not the root index.
     if (extremum != rootIndex)
     {
-        // Swap the value of root index and the largest one.
+        // Swap the value of root with the smallest(largest) one.
         array[rootIndex] = array[rootIndex] ^ array[extremum];
         array[extremum] = array[rootIndex] ^ array[extremum];
         array[rootIndex] = array[rootIndex] ^ array[extremum];
 
+        // Recursively adjusting the heap
         heapify(array, length, extremum, isAscend);
     }
 }
 
 void heapSort(int array[], int length, bool isAscend)
 {
-    // Build the heap, the index of the first non-leaf node is "length/2 - 1"
+    // Build the heap(complete binary tree), the index of the first non-leaf node is "length/2 - 1", we choose it as the first node (which has child nodes) to recursively build heap.
     for (int adjIndex = (length / 2) - 1; adjIndex >= 0; adjIndex--)
         heapify(array, length, adjIndex, isAscend);
 
-    // Owing to the first element is the largest or smallest one in the heap,
-    // so after swap the first element with the last element each cycle and you will get the sorted array at last.
+    // Owing to the first element is the largest or smallest one in the heap(i.e. the root node in complete binary tree), after swapping the first element with the last element and adjusting heap each cycle, you will get the sorted array at last.
     for (int i = length - 1; i > 0; i--)
     {
         array[0] = array[0] ^ array[i];
