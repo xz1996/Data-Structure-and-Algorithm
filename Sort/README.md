@@ -64,10 +64,10 @@ void shellSort(int array[], int length, bool isAscend)
 ```C
 void bubbleSort(int array[], int length, bool isAscend)
 {
-    bool isSortdFlag = false;
+    bool isSortedFlag = false;
     for (int i = length - 1; i >= 0; i--)
     {
-        isSortdFlag = false;
+        isSortedFlag = false;
         for (int j = 0; j < i; j++)
         {
             if (isAscend ? array[j] > array[j + 1] : array[j] < array[j + 1])
@@ -77,10 +77,10 @@ void bubbleSort(int array[], int length, bool isAscend)
                 array[j + 1] = array[j] ^ array[j + 1];
                 array[j] = array[j] ^ array[j + 1];
 
-                isSortdFlag = true;
+                isSortedFlag = true;
             }
         }
-        if (!isSortdFlag)
+        if (!isSortedFlag)
         {
             break;
         }
