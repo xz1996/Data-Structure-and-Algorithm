@@ -89,16 +89,16 @@ int manacher(const char* rawStr)
     int max_len = -1;  // 最长回文长度
 
     int center = 0;     // center的主要作用是作为回文的中心，这个轴中心是从左往右跳跃着变化的
-    int radius = 0;     // 以center为中心的最大回文半径
+    int radius = 0;     // 以center为中心的最大回文半径的下标，radius - center为以center为中心的最大回文半径，也即radius - center == p[center]
 
     for (int i = 1; i < len; i++)
     {
-        if (i < radius)     // 如果i在以center为中心，回文半径为radius的范围内，则可以利用回文的特性，快速求取p[i]的值。 p[2 * center - i]是i以center为中心的对称点的值
+        if (i < radius)     // 如果i在以center为中心，回文半径为radius - center的范围内，则可以利用回文的特性，快速求取p[i]的值。 p[2 * center - i]是i以center为中心的对称点的值
             p[i] = min(p[2 * center - i], radius - i);  // 计算出p[i]的最小可能值
         else                // 如果不在该半径内，则无法利用回文的特性，只能按普通的方法来一步一步求取p[i]的准确值，最开始的默认值为1
             p[i] = 1;
 
-        // 因为上面计算所得的p[i]值为最小可能值，p[i]的准确值还需通过不断扩展来判断，这个while循环判断以i为中心的回文半径（i的回文半径外的第一个位置的值如果两边都相等，说明回文半径还可以加1）。注意，这里不需边界判断，因为左有'$',右有'\0'
+        // 因为上面计算所得的p[i]值为最小可能值，p[i]的准确值还需通过不断扩展来判断，这个while循环不断扩展以i为中心的回文半径（i当前的回文半径外的第一个位置的值如果两边都相等，说明回文半径还可以加1）。注意，这里不需边界判断，因为左有'$',右有'\0'
         while (newStr[i - p[i]] == newStr[i + p[i]])
             p[i]++;
 
