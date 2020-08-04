@@ -121,7 +121,7 @@ int manacher(const char* rawStr)
 
 Time complexity: *O(n)*
 
-Refer to <https://subetter.com/algorithm/manacher-algorithm.html>
+Refer to <https://ethsonliu.com/2018/04/manacher.html>
 
 ## Longest Common Substring
 
